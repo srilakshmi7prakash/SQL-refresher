@@ -25,20 +25,17 @@
 
 
 WITH CTE AS (
-  SELECT customer_id,
-         SUM(order_value) AS value_customer
+  SELECT 
+    customer_id,
+    SUM(order_value) AS value_customer,
+    RANK() OVER (ORDER BY SUM(order_value) DESC) AS rnk
   FROM orders
   GROUP BY customer_id
-),
-
-CTE2 AS (
-  SELECT customer_id,
-         value_customer,
-         RANK() OVER (ORDER BY value_customer DESC) AS rnk
-  FROM CTE
 )
-
-SELECT customer_id,
-       value_customer
-FROM CTE2
+SELECT customer_id, value_customer
+FROM CTE
 WHERE rnk = 1;
+
+
+
+
