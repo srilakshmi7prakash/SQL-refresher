@@ -1,0 +1,30 @@
+-- Platform: Practice SQL / Interview Prep
+-- Question: Automated Inventory Status Labels
+-- Difficulty: Easy/Medium
+-- Date: 2026-02-14
+
+-- Problem:
+-- Categorize inventory levels into three business-friendly status 
+-- labels: 'out of stock', 'Low', and 'Healthy'.
+
+-- Approach:
+-- 1. Use the CASE WHEN statement to evaluate the 'Quantity' column.
+-- 2. Logic Order:
+--    - Check for 0 first (Critical)
+--    - Check for < 10 second (Warning)
+--    - Everything else defaults to 'Healthy'.
+-- 3. Alias the resulting column as 'status'.
+
+-- Concepts:
+-- 1. Conditional Logic (CASE WHEN)
+-- 2. Data Labeling/Bucketing
+-- 3. Logical Precedence
+
+SELECT 
+    *,  
+    CASE
+        WHEN Quantity = 0 THEN 'out of stock'
+        WHEN Quantity < 10 THEN 'Low'
+        ELSE 'Healthy'  
+    END AS status
+FROM Inventory;
